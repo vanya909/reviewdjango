@@ -33,10 +33,9 @@ class Site(models.Model):
 class Review(models.Model):
 
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
+    rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     description = models.TextField(blank=True)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.site} - {self.author}'
-

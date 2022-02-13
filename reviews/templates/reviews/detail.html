@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.site }} Review{% endblock title %}
+
+{% block content %}
+    <h2>{{ object.site }}</h2>
+    <p>{{ object.rating }}</p>
+    <p>{{ object.description }}</p>
+    <p>{{ object.author }}</p>
+{% endblock content %}
