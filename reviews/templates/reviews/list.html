@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Reviews List{% endblock title %}
+
+{% block content %}
+    <h2>Reviews list</h2>
+    <ul>
+    {% for review in object_list %}
+        <li><a href="#">{{ review.site }} - {{ review.rating }} ({{ review.author }})</a></li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
