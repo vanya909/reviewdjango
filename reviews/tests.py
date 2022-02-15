@@ -14,9 +14,10 @@ class TestDetail(TestCase):
 
     def test_detail_page_status_code(self):
         response = self.client.get(f'/reviews/{self.test_review.pk}')
-        response_reverse_lazy = self.client.get(reverse_lazy('review_detail', args=[self.test_review.pk,]))
-
         self.assertEqual(response.status_code, 200, "Detail page code isn't 200")
+
+    def test_detail_page_reverse_lazy_status_code(self):
+        response_reverse_lazy = self.client.get(reverse_lazy('review_detail', args=[self.test_review.pk, ]))
         self.assertEqual(response_reverse_lazy.status_code, 200, "Detail page reverse lazy code isn't 200")
 
     def test_detail_page_template(self):
@@ -41,9 +42,10 @@ class TestList(TestCase):
 
     def test_list_page_status_code(self):
         response = self.client.get('/reviews/list/')
-        response_reverse_lazy = self.client.get(reverse_lazy('review_list'))
-
         self.assertEqual(response.status_code, 200, "List page code isn't 200")
+
+    def test_list_page_reverse_lazy_status_code(self):
+        response_reverse_lazy = self.client.get(reverse_lazy('review_list'))
         self.assertEqual(response_reverse_lazy.status_code, 200, "List page reverse lazy code isn't 200")
 
     def test_list_page_template(self):
