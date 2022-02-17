@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.site }} review delete{% endblock title %}
+
+{% block content %}
+    <h2>Are you really want to delete it?</h2>
+    <form method="post"> {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Delete</button>
+    </form>
+    <p>No, I was wrong, i want to go <a href="{% url 'review_detail' object.pk %}">back</a></p>
+{% endblock content %}

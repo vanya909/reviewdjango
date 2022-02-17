@@ -7,4 +7,9 @@
     <p>{{ object.rating }}</p>
     <p>{{ object.description }}</p>
     <p>{{ object.author }}</p>
+    {% if user.is_authenticated %}
+        {% if user.username == object.author.username %}
+            <p><a href="{% url 'review_delete' object.pk %}">Delete</a> this review</p>
+        {% endif %}
+    {% endif %}
 {% endblock content %}

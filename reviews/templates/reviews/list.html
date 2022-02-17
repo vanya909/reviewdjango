@@ -5,7 +5,7 @@
 {% block content %}
     <h2>Reviews list</h2>
     {% if user.is_authenticated %}
-        <p><a href="{% url 'create' %}">Make</a> your own review</p>
+        <p><a href="{% url 'review_create' %}">Make</a> your own review</p>
     {% else %}
         <p>You must be <a href="{% url 'login' %}">logged in</a> to create your own review</p>
     {% endif %}

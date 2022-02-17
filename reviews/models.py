@@ -9,12 +9,9 @@ class Site(models.Model):
         max_length=63,
         validators=[
             RegexValidator(
-                '^[a-z0-9][a-z0-9\-]+[a-z0-9]\.[a-z]+$',
-                message="Domain names can only use letters, " +
-                        "numbers and hyphens (“-“). " +
-                        "Names cannot begin or end with a hyphen. " +
-                        "Domains cannot exceed 63 characters. " +
-                        "Domain name can only contains at least 3 characters."
+                '^[a-z0-9]+\.[a-z]+$',
+                message="Domain names can only use letters, and numbers"
+                        "Domains cannot exceed 63 characters. "
             )
         ]
     )
