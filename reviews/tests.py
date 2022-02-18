@@ -210,3 +210,70 @@ class TestDelete(TestCase):
         )
         response = self.client.get(reverse_lazy('review_delete', args=[self.test_review.pk, ]))
         self.assertTemplateUsed(response, 'reviews/delete.html')
+
+
+class TestUpdate(TestCase):
+    """Testing review update page"""
+
+    def setUp(self):
+        """Creating user, site and review which we want to test"""
+
+        self.user_data = {
+            'username': 'user',
+            'email': 'email@email.com',
+            'password': 'very_strong_password',
+        }
+        self.test_user = create_test_user(
+            self.user_data['username'],
+            self.user_data['email'],
+            self.user_data['password'],
+        )
+        self.test_site = create_test_site('google.com')
+        self.test_review = create_test_review(self.test_site, self.test_user)
+
+    def test_update_page_status_code(self):
+        """
+        Check review update page status code
+        without user logged-in first and with user logged-in then
+        """
+
+        response = self.client.get(f'/reviews/{self.test_review.pk}/update/')
+        self.assertEqual(response.status_code, 403)
+
+        self.client.login(
+            username=self.user_data['username'],
+            password=self.user_data['password']
+        )
+
+        response = self.client.get(f'/reviews/{self.test_review.pk}/update/')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(f'/reviews/{self.test_review.pk + 1}/update/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_update_page_reverse_lazy_status_code(self):
+        """
+        Check review update page status code using reverse_lazy()
+        without user logged-in first and with user logged-in then
+        """
+
+        response = self.client.get(reverse_lazy('review_update', args=[self.test_review.pk, ]))
+        self.assertEqual(response.status_code, 403)
+
+        self.client.login(
+            username=self.user_data['username'],
+            password=self.user_data['password']
+        )
+
+        response = self.client.get(reverse_lazy('review_update', args=[self.test_review.pk, ]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_page_template(self):
+        """Check whether the template is reviews/update.html or not"""
+
+        self.client.login(
+            username=self.user_data['username'],
+            password=self.user_data['password']
+        )
+        response = self.client.get(reverse_lazy('review_update', args=[self.test_review.pk, ]))
+        self.assertTemplateUsed(response, 'reviews/update.html')

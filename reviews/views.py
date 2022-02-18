@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, DeleteView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -31,8 +31,23 @@ class ReviewDelete(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
+class ReviewUpdate(LoginRequiredMixin, UpdateView):
+    model = Review
+    fields = ['rating', 'description']
+    template_name = 'reviews/update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('review_detail', args=[self.object.pk, ])
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.author != self.request.user:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
 @login_required(login_url='/users/login/')
-def ReviewCreate(request):
+def review_create(request):
     if request.method == 'POST':
         form = ReviewCreationForm(request.POST)
         if form.is_valid():

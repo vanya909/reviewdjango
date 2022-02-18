@@ -9,7 +9,7 @@
     <p>{{ object.author }}</p>
     {% if user.is_authenticated %}
         {% if user.username == object.author.username %}
-            <p><a href="{% url 'review_delete' object.pk %}">Delete</a> this review</p>
+            <p><a href="{% url 'review_update' object.pk %}">Edit</a> or <a href="{% url 'review_delete' object.pk %}">Delete</a> this review</p>
         {% endif %}
     {% endif %}
 {% endblock content %}
