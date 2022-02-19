@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_filters %}
+
 {% block title %}Registration{% endblock title %}
 
 {% block content %}
     <div>
         <form method="post"> {% csrf_token %}
-            {{ register_form.as_p }}
-            <button type="submit">Register</button>
+            {{ register_form|crispy }}
+            <button class="btn btn-success" type="submit">Register</button>
         </form>
     </div>
 {% endblock content %}
