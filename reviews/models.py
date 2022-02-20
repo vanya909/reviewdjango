@@ -7,6 +7,7 @@ class Site(models.Model):
 
     domain = models.CharField(
         max_length=63,
+        unique=True,
         validators=[
             RegexValidator(
                 '^[a-z0-9]+\.[a-z]+$',
