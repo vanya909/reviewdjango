@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+    {% if searched %}
+        {% for search in searched %}
+            {{ search.site.domain }} - {{ search.rating }} ({{ search.author }})
+        {% endfor %}
+    {% else %}
+        Nothing was found
+    {% endif %}
+{% endblock content %}

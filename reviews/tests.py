@@ -277,3 +277,25 @@ class TestUpdate(TestCase):
         )
         response = self.client.get(reverse_lazy('review_update', args=[self.test_review.pk, ]))
         self.assertTemplateUsed(response, 'reviews/update.html')
+
+
+class TestSearch(TestCase):
+    """Test review search page"""
+
+    def test_search_page_status_code(self):
+        """Check review search page status code"""
+
+        response = self.client.post('/reviews/search/', {'searched': ''})
+        self.assertEqual(response.status_code, 200, "Search page code isn't 200")
+
+    def test_search_page_reverse_lazy_status_code(self):
+        """Check review search page status code using reverse_lazy()"""
+
+        response_reverse_lazy = self.client.post(reverse_lazy('review_search'), {'searched': ''})
+        self.assertEqual(response_reverse_lazy.status_code, 200, "Search page reverse lazy code isn't 200")
+
+    def test_search_page_template(self):
+        """Check whether the template is reviews/search.html or not"""
+
+        response = self.client.post(reverse_lazy('review_search'), {'searched': ''})
+        self.assertTemplateUsed(response, 'reviews/search.html', "Search template isn't reviews/search.html")

@@ -59,3 +59,14 @@ def review_create(request):
     else:
         form = ReviewCreationForm()
     return render(request, 'reviews/create.html', context={'form': form})
+
+
+def review_search(request):
+    searched = request.POST['searched']
+    reviews_list = Review.objects.filter(site__domain__contains=searched)
+
+    return render(
+        request,
+        'reviews/search.html',
+        {'searched': reviews_list}
+    )

@@ -10,7 +10,7 @@ class Site(models.Model):
         unique=True,
         validators=[
             RegexValidator(
-                '^[a-z0-9]+\.[a-z]+$',
+                r'^[a-z0-9]+\.[a-z]+$',
                 message="Domain names can only use letters, and numbers"
                         "Domains cannot exceed 63 characters. "
             )

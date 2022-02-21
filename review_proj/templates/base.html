@@ -12,38 +12,44 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand ms-2" href="{% url 'home' %}">Review</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">Review</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a class="nav-link active" href="{% url 'home' %}">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'review_list' %}">Review List</a>
-      </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'review_list' %}">Review List</a>
+        </li>
+        {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link disabled" href="{% url 'review_create' %}">Create Review</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'review_create' %}">Create Review</a>
+            </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex me-4" method="post" action="{% url 'review_search' %}"> {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search Site Review" aria-label="Search" name="searched"/>
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
       {% if not user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link disabled" href="{% url 'review_create' %}">Create Review</a>
-          </li>
+            <a class="btn btn-outline-primary me-2"  href="{% url 'login' %}">Log In</a>
+            <a class="btn btn-outline-success" href="{% url 'registration' %}">Sign Up</a>
       {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'review_create' %}">Create Review</a>
-          </li>
+            <a class="btn btn-outline-danger" href="{% url 'logout' %}">Log Out</a>
       {% endif %}
-    </ul>
-    {% if not user.is_authenticated %}
-          <a class="btn btn-outline-primary me-2"  href="{% url 'login' %}">Log In</a>
-          <a class="btn btn-outline-success me-2" href="{% url 'registration' %}">Sign Up</a>
-    {% else %}
-          <a class="btn btn-outline-danger me-2" href="{% url 'logout' %}">Log Out</a>
-    {% endif %}
+    </div>
   </div>
 </nav>
-<div class="ms-2">
+<div class="container-fluid">
 {% block content %}
 {% endblock content %}
 </div>
