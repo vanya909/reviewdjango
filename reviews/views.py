@@ -63,10 +63,11 @@ def review_create(request):
 
 def review_search(request):
     searched = request.POST['searched']
-    reviews_list = Review.objects.filter(site__domain__contains=searched)
+    site = Site.objects.get(domain__contains=searched)
+    review_list = site.review_set.all()
 
     return render(
         request,
         'reviews/search.html',
-        {'searched': reviews_list}
+        {'searched': review_list}
     )
