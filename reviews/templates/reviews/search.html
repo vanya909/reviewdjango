@@ -4,9 +4,11 @@
 
 {% block content %}
     {% if searched %}
-        {% for search in searched %}
-            {{ search.site.domain }} - {{ search.rating }} ({{ search.author }})
+        <ul>
+        {% for search in searched reversed %}
+            <li><a href="{% url 'review_detail' search.pk %}">{{ search.site.domain }} - {{ search.rating }} ({{ search.author }})</a></li>
         {% endfor %}
+        </ul>
     {% else %}
         Nothing was found
     {% endif %}
