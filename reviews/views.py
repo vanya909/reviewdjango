@@ -63,8 +63,10 @@ def review_create(request):
 
 def review_search(request):
     searched = request.POST['searched']
-    site = Site.objects.get(domain__contains=searched)
-    review_list = site.review_set.all()
+    sites = Site.objects.filter(domain__contains=searched)
+    review_list = []
+    for site in sites:
+        review_list += site.review_set.all()
 
     return render(
         request,
